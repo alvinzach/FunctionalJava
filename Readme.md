@@ -218,3 +218,70 @@ boolean anyOneAbove90 = students.stream()
 ```java
 Student findOneStudentAbove90 = students.stream().findAny().get();
 ```
+
+`intStream`,`doubleStream` and `longStream` have methods like sum and average
+
+```java
+Double sum = students.stream()
+                .mapToDouble(Student::getMarks)
+                .sum();
+
+Double avg = students.stream()
+                .mapToDouble(Student::getMarks)
+                .average().getAsDouble();
+```
+
+`average()` returns an `OptionalDouble` . getAsDouble returns the value . Throws
+exception if no value is present
+
+## Stream Transformation functions
+
+`Filter` and `Map` are stream transformations . `FlatMap` combines multiple streams 
+into a single one ( flattens out ) .
+
+* Sorting students based on marks
+```java
+List<Student> studentSorted =  students.stream()
+        .sorted(Comparator.comparing(
+                Student::getName,
+                String::compareTo
+        ))
+        .distinct()
+        .collect(Collectors.toList());
+```
+
+`.sorted` method accepts a `Comparator<T>` . common comparators are available in
+`Comparator` class .
+`Comparator.comparingInt` , `Comparator.comparingFloat` .
+
+A custom comparator can be created as `Comparator.comparing(KeyExtractor,KeyComparison)` . 
+
+`Comparator` supports methods like `reversed()` for reverse sort and `thenComparing(comparator)` for
+chaining comparators
+
+````java
+List<Student> studentsWithDistinction = students.stream()
+    .filter(s->s.getMarks()>80)
+    .sorted(Comparator.comparingDouble(Student::getMarks)
+        .reversed()
+        .thenComparing(Comparator.comparing(Student::getName)
+            .reversed()))
+    .collect(Collectors.toList());
+
+````
+
+Students with mark above 80 are filtered out , and are sorted in descending
+order of marks . Students with same marks are sorted in descending order of names.
+
+`FlatMaps` are used to flatten out multiple streams into single stream .
+
+```java
+List<Subject> subjects = students.stream()
+    .flatMap(s->{
+        if(null==s.getSubjects())
+            return Stream.of();
+        return s.getSubjects().stream();
+    })
+    .distinct()
+    .collect(Collectors.toList());
+```

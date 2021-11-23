@@ -183,3 +183,38 @@ Map<String,Student> studentMap = students.stream()
                 .collect(Collectors.toMap(Student::getName,student->student));
 ```
 `toMap(ValueMapper,keyMapper)`
+
+## Stream reduction 
+
+A stream can be reduced to an object by using any reduction operation as
+follows
+
+* `max/min` - accepts a compator to find maximum/minimum of stream
+```java
+  Student maxMark = students.stream()
+        .max(Comparator.comparingDouble(Student::getMarks)).get();
+
+  Optional<Student> minMark = students.stream()
+        .min(Comparator.comparingDouble(Student::getMarks));
+```
+ Returns an optional<Student> .
+
+* `count` return count of element as long
+```java
+long totalStudents = students.stream().count();
+```
+
+* `allMatch` and `anyMatch` accepts predicates and return boolean . true if all/any of elements
+in streams satisfies the predicate .
+  
+```java
+boolean markAbove90 = students.stream()
+        .allMatch(student -> student.getMarks()>90);
+
+boolean anyOneAbove90 = students.stream()
+        .anyMatch(student -> student.getMarks()>90);
+```
+* `findAny` , `findFirst` return any/first element from the stream
+```java
+Student findOneStudentAbove90 = students.stream().findAny().get();
+```

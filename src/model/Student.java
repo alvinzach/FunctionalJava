@@ -2,10 +2,15 @@ package model;
 
 public class Student {
     String name;
-    Integer marks;
+    Double marks;
 
     public Student(String name) {
         this.name = name;
+    }
+
+    public Student(String name,Double marks) {
+        this.name = name;
+        this.marks = marks;
     }
 
     public String getName() {
@@ -16,11 +21,11 @@ public class Student {
         this.name = name;
     }
 
-    public Integer getMarks() {
+    public Double getMarks() {
         return marks;
     }
 
-    public void setMarks(Integer marks) {
+    public void setMarks(Double marks) {
         this.marks = marks;
     }
 

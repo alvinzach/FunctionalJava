@@ -1,4 +1,4 @@
-package model.streams;
+package streams;
 
 import model.Student;
 

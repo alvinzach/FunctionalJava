@@ -183,6 +183,18 @@ Map<String,Student> studentMap = students.stream()
                 .collect(Collectors.toMap(Student::getName,student->student));
 ```
 `toMap(ValueMapper,keyMapper)`
+## Creating Streams
+
+```java 
+Arrays.stream(names)
+
+Stream.of(1,2,3,4,5,6,7,8,9,10)
+
+Stream.iterate(1,i->i+1).limit(10)
+
+Stream.generate(()->2).limit(5)
+```
+
 
 ## Stream reduction 
 
@@ -285,3 +297,4 @@ List<Subject> subjects = students.stream()
     .distinct()
     .collect(Collectors.toList());
 ```
+
